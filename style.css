@@ -1,0 +1,150 @@
+body {
+    background-color: #eee;
+    padding: 0px;
+    font-size: 3vmin;
+}
+
+#game_field {
+    border: 1px solid #cacaca;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+@media (orientation: landscape) {
+    #game_field {
+        height: 85vmin;
+        width: 85vmin;
+    }
+}
+
+@media (orientation: portrait) {
+    #game_field {
+        height: 98vmin;
+        width: 98vmin;
+    }
+}
+
+#game_field tr {
+    height: 10%;
+}
+
+#game_field td {
+    text-align: center;
+    width: 10%;
+    border: 1px solid #cacaca;
+    margin: 0px;
+    padding: 0px;
+    font-style: italic;
+}
+
+td.coordinate {
+    background:  #e5e8e8 ;
+}
+
+#game_field td.allowed {
+    background-color: #dfd;
+}
+
+.disk {
+    margin: 2px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 5px grey;
+    width: 90%;
+    height: 90%;
+}
+
+.score_disk {
+    margin: 4px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 5px grey;
+    width: 4vmin;
+    height: 4vmin;
+}
+
+/*
+To simplify color transition animation function the gradient colors are chosen so that
+the difference between both componets of the gradient for black and white disks is the same:
+0xff - 0x6f = 0x90
+0x99 - 0x09 = 0x90
+Also 0x90 (144) has a a lot of factors, which allows to change animation speed
+by changing delta size.
+*/
+.white {
+    background: linear-gradient(#ffffff, #999999);
+}
+
+.black {
+    background: linear-gradient(#6f6f6f, #090909);
+}
+
+.rating_info {
+    color: red;
+    font-size: 2vmin;
+}
+
+#score_container {
+    display: flex;
+    margin: auto;
+    width: 85vmin;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+dialog {
+    border: none;
+    outline: 0;
+    box-shadow: 7px 7px 7px grey;
+}
+
+dialog::backdrop {
+    background-color: black;
+    opacity: 0.3;
+}
+
+#color_picker {
+    display: flex;
+    margin: auto;
+    padding: 5px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#score_value_black {
+    width: 5em;
+    text-align: right;
+    margin: 4px;
+}
+
+#score_value_white {
+    width: 5em;
+    text-align: left;
+    margin: 4px;
+}
+
+
+#score_tbl {
+    width: 100%;
+    border: 1px solid #cacaca;
+    border-collapse: collapse;
+}
+
+#score_tbl th, #score_tbl td {
+    border: 1px solid #cacaca;
+    padding: 5px;
+    text-align: center;
+}
+
+#message {
+    text-align: center;
+    vertical-align: center;
+}
+
+a:not([href]) {
+    color: blue;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+

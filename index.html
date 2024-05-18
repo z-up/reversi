@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Reversi</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link rel="icon" type="image/x-icon" href="favicon-32.png">
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <script src="script.js" charset="utf-8"></script>
+  </head>
+
+  <body>
+
+    <table id="game_field"></table>
+
+    <div id="score_container">
+      <div id="score_value_black" class="score_value">2</div>
+      <div class="score_disk black"></div>
+      <div class="score_disk white"></div>
+      <div id="score_value_white" class="score_value">2</div>
+    </div>
+
+    <div id="message"></div>
+
+    <dialog id="new_game_dlg">
+      <div>Pick your color</div>
+      <div id="color_picker">
+        <div class="score_disk black" onclick="setPlayerColor('black')"></div>
+        <div class="score_disk white" onclick="setPlayerColor('white')"></div>
+      </div>
+    </dialog>
+
+  </body>
+
+</html>
+
