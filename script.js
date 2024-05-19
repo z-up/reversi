@@ -473,8 +473,7 @@ function getLineStrRepr(startPos, direction, lineLength = 8, cellToRate = new Po
         curPos.row += direction.row;
         curPos.col += direction.col;
 
-        if(
-            strRepr.length >= lineLength
+        if( strRepr.length >= lineLength
             || curPos.row > 8 || curPos.row < 1
             || curPos.col > 8 || curPos.col < 1
         ){
@@ -498,19 +497,19 @@ const BORDER_PATTERNS = [
     [/^o+xo+_$/, 9],
     [/^m+o+x.*$/, 9],
     [/^_+m+o+x_+$/, 9],
-    [/^_+xo+m.*$/, 9],
     [/^_+x_o+_+$/, 5],
     [/^o+xm+o+.*$/, 4],
     [/^o+m+xo+.*$/, 4],
     [/^.*ox_o.*$/, -5],
     [/^_+x_+$/, 8],
-    [/^_+o+x_+$/, -3],
+    [/^_+o+x_$/, -9],
+    [/^_+o+x__+$/, -5],
     [/^_+xo+m+_o+_+$/, 5],
     [/^_+m+o+x_+$/, 6],
     [/^_xo+_.*$/, -10],
     [/^__+xo+_.*$/, -4],
     [/^_+x_o+_+$/, 5],
-    [/^.*o+xm+o+.*$/, 6],
+    [/^_o+xm+o+.*$/, 9],
     [/^_+x__m+_+$/, 4],
     [/^_+xo+m+_.*$/, 7],
     [/^m+xm+.*$/, 9],
@@ -533,10 +532,12 @@ const BORDER_PATTERNS = [
     [/^_+o+xm+_o+_+$/, -9],
     [/^o+xm+_+$/, -7],
     [/^o+xo+m+_+$/, -7],
-    // [/^$/, 0],
-    // [/^$/, 0],
-    // [/^$/, 0],
-    // [/^$/, 0],
+    [/^_+x___o+_+$/, 4],
+    [/^_+ox__m+_+$/, -4],
+    [/^_+o+xo+_+$/, 6],
+    [/^m+__x_+$/, 6],
+    [/^m+_x_+$/, -3],
+    [/^_xo+m+o+.*$/, -9],
     // [/^$/, 0],
     // [/^$/, 0],
     // [/^$/, 0],
@@ -562,7 +563,12 @@ function rateBorderMove(border){
 }
 
 const DIAGONAL_PATTERNS = [
-    [/^_x.*$/, -9]
+    [/^_xo+.*$/, -9],
+    [/^_xm+o+.*$/, -9],
+    [/^_xm+_+$/, 2],
+    [/^_xm+o+m+_+$/, 2],
+    [/^_xm+$/, 2],
+    [/^_xo+m+$/, 2],
 ];
 
 
