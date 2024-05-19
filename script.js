@@ -29,7 +29,7 @@ class MoveRating {
     }
 }
 
-const allPossibleDirections = [
+const ALL_POSSIBLE_DIRECTIONS = [
     new Position( 0,  1), // right
     new Position(-1,  1), // up and right
     new Position(-1,  0), // up
@@ -147,8 +147,8 @@ function getPossibleMoves(color) {
     for(let i = 0; i < disksOfGivenColor.length; i += 1) {
         const cell = disksOfGivenColor[i].parentNode;
         const cellPos = getCellPos(cell);
-        for(let d = 0; d < allPossibleDirections.length; d += 1){
-            const dir = allPossibleDirections[d];
+        for(let d = 0; d < ALL_POSSIBLE_DIRECTIONS.length; d += 1){
+            const dir = ALL_POSSIBLE_DIRECTIONS[d];
             const hit = lookForAvailableCellInDir(cellPos, dir, color);
             if(hit !== null){
                 availableCells.push(hit);
@@ -189,8 +189,8 @@ function lookForAvailableCellInDir(start, dir, color){
 
 async function turnDisksOver(pos, color) {
     ANIMATION_DISKS = [];
-    for(let d = 0; d < allPossibleDirections.length; d += 1){
-        const dir = allPossibleDirections[d];
+    for(let d = 0; d < ALL_POSSIBLE_DIRECTIONS.length; d += 1){
+        const dir = ALL_POSSIBLE_DIRECTIONS[d];
         turnDisksOverInDir(pos, dir, color);
     }
     // remove duplicates
