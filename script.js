@@ -1,6 +1,6 @@
 "use strict";
 
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 class Position {
     constructor(row, col){
@@ -187,6 +187,47 @@ function lookForAvailableCellInDir(start, dir, color){
     }
 }
 
+async function showDebugInfo(ratings){
+    window.requestAnimationFrame(() => {
+        for(let r of ratings){
+            const ratingInfo = document.createElement('div');
+            ratingInfo.className = 'rating_info';
+            if(r.ruleNumber !== -1){
+                ratingInfo.innerText = `${r.rating} (${r.ruleNumber})`;
+            }
+            else{
+                ratingInfo.innerText = r.rating;
+            }
+
+            r.cell.appendChild(ratingInfo);
+        }
+
+        window.requestAnimationFrame(() => {
+            const event = new Event("showDebugInfoFinished");
+            document.dispatchEvent(event);
+        });
+
+    });
+    await getPromiseFromEvent(document, "showDebugInfoFinished");
+}
+
+async function clearDebugInfo(){
+    window.requestAnimationFrame(() => {
+        const elements = document.querySelectorAll('.rating_info');
+        elements.forEach(element => {
+            element.remove();
+        });
+
+        window.requestAnimationFrame(() => {
+            const event = new Event("clearDebugInfoFinished");
+            document.dispatchEvent(event);
+        });
+
+    });
+
+    await getPromiseFromEvent(document, "clearDebugInfoFinished");
+}
+
 async function turnDisksOver(pos, color) {
     ANIMATION_DISKS = [];
     for(let d = 0; d < ALL_POSSIBLE_DIRECTIONS.length; d += 1){
@@ -345,7 +386,7 @@ async function makeAMove() {
         return;
     }
 
-    const cell = pickTheBestMove(myPossibleMoves);
+    const cell = await pickTheBestMove(myPossibleMoves);
     const pos = getCellPos(cell);
     cell.appendChild(createDisk(MY_COLOR));
     await turnDisksOver(pos, MY_COLOR);
@@ -376,25 +417,12 @@ async function makeAMove() {
 
 
 // assuming that possibleMoves isn't empty
-function pickTheBestMove(possibleMoves) {
+async function pickTheBestMove(possibleMoves) {
     const ratings = possibleMoves.map(rateAMove).sort(compareByRatingDesc);
     if(DEV_MODE){
-        for(let r of ratings){
-            const ratingInfo = document.createElement('div');
-            ratingInfo.className = 'rating_info';
-            if(r.ruleNumber !== -1){
-                ratingInfo.innerText = `${r.rating} (${r.ruleNumber})`;
-            }
-            else{
-                ratingInfo.innerText = r.rating;
-            }
-
-            r.cell.appendChild(ratingInfo);
-        }
+        await showDebugInfo(ratings);
         debugger;
-        for(let r of ratings){
-            r.cell.innerHTML = '';
-        }
+        await clearDebugInfo();
     }
     return ratings[0].cell;
 }
@@ -498,7 +526,7 @@ const BORDER_PATTERNS = [
     [/^m+o+x.*$/, 9],
     [/^_+m+o+x_+$/, 9],
     [/^_+x_o+_+$/, 5],
-    [/^o+xm+o+.*$/, 4],
+    [/^o+xm+o+.*$/, 5],
     [/^o+m+xo+.*$/, 4],
     [/^.*ox_o.*$/, -5],
     [/^_+x_+$/, 8],
@@ -597,8 +625,6 @@ function getScore() {
 
 
 // disk color transition animation
-const event = new Event("animationFinished");
-
 let ANIMATION_CUR_COLOR_1;
 let ANIMATION_CUR_COLOR_2;
 let ANIMATION_COLOR_DELTA;
