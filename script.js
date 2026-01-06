@@ -659,8 +659,11 @@ function animateDiskColorChange(timeStamp){
                 disk.classList.add("white");
             }
         }
-        const event = new Event("animationFinished");
-        document.dispatchEvent(event);
+        window.requestAnimationFrame(() => {
+            const event = new Event("animationFinished");
+            document.dispatchEvent(event);
+        });
+
     }
 }
 
